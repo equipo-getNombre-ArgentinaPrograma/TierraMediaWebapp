@@ -9,13 +9,18 @@
 
 <body>
 	<jsp:include page="partials/nav-logged.jsp"></jsp:include>
-
-	<div class="header-container">
-		<div class="header-center">
-			<h1 style="text-align: center; color: white">HOLA <c:out value="${user.getName()}" /> !</h1>
-			<p style="text-align: center; color: white"> -tenes <c:out value="${user.getAvailableCoins()}" /> monedas disponibles.</p>
-			<p style="text-align: center; color: white"> -tenes <c:out value="${user.getAvailableTime()}" /> horas disponibles.</p>
+	<div class="content-container">
+		<div class="content-center">
+		<div class="user-data">
+			<p>HOLA <c:out value="${user.getName()}" /> !</p>
+			<span> -tenes <c:out value="${user.getAvailableCoins()}" /> monedas disponibles.</span>
+			<span> -tenes <c:out value="${user.getAvailableTime()}" /> horas disponibles.</span>
 		</div>
+		</div>
+		<div class="content-container purchased">
+		<div class="purchased-suggestions">
+		</div>
+	</div>
 	</div>
 </body>
 

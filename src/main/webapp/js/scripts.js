@@ -3,8 +3,9 @@ document.querySelector(".forgot-username-link").addEventListener("click", showUs
 
 document.querySelector(".popup .close-btn").addEventListener("click", hidePopup) //cierra el popup de login
 document.querySelector(".username-popup .popup-btn").addEventListener("click", hidePopup) //cierra el popup de usuario olvidado
+document.querySelector("#gbye-msg .popup-btn").addEventListener("click", hidePopup) //cierra el popup de usuario olvidado
 document.querySelector(".popup .transparent-label").addEventListener("click", hidePopup) //cierra los popups cuando se hace click fuera de la ventana
-
+document.querySelector("#gbye-popup .transparent-label").addEventListener("click", hidePopup) //cierra los popups cuando se hace click fuera de la ventana
 document.getElementById("visibility-btn").addEventListener("click", togglePasswordVisibility)
 
 function showLoginPopup() {
@@ -21,6 +22,8 @@ function hidePopup() {
 	document.querySelector(".popup").classList.remove("active")
 	document.querySelector(".login-popup").classList.remove("active")
 	document.querySelector(".username-popup").classList.remove("active")
+	$("#gbye-msg").removeClass("active")
+	$("#gbye-popup").removeClass("active")
 }
 
 function togglePasswordVisibility() {

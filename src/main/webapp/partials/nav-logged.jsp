@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <nav class="navbar">
 	<label class="logo"> ttm </label>
 	<div class="navbar_items">
@@ -6,7 +7,8 @@
 			<li><a href="#">Sobre nosotros</a></li>
 		</ul>
 		<ul class="items-r">
-			<li><a href="/logout">Cerrar sesion</a></li>
+			<li><a href="/Proyecto-Web/logout">Cerrar sesion</a></li>
+			<li><a href="/Proyecto-Web/mypage.jsp"><c:out value="${user.getName()}" /></a></li>
 		</ul>
 	</div>
 </nav>

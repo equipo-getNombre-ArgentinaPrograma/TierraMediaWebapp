@@ -8,7 +8,14 @@
 </head>
 
 <body>
-	<jsp:include page="partials/nav.jsp"></jsp:include>
+	<c:choose>
+		<c:when test="${user == null}">
+			<jsp:include page="partials/nav.jsp"></jsp:include>
+		</c:when>
+		<c:otherwise>
+			<jsp:include page="partials/nav-logged.jsp"></jsp:include>
+		</c:otherwise>
+	</c:choose>
 	<div class="header-container">
 		<div class="header-center">
 			<div class="blank-div"></div>
@@ -24,7 +31,8 @@
 			<div class="close-btn">&times;</div>
 			<div class="form">
 				<div class="login-err-msg">
-					<p>El nombre de usuario o contraseña es incorrecto, intente nuevamente</p>
+					<p>El nombre de usuario o contraseña es incorrecto, intente
+						nuevamente</p>
 				</div>
 				<form name="login-form" id="login-form">
 					<div class="form-element">
@@ -47,14 +55,22 @@
 				</form>
 			</div>
 		</div>
-		<div class="username-popup">
+		<div id="forget-user-msg" class="username-popup">
 			<span>Mala suerte pa, create otro.</span>
 			<button class="popup-btn">Volver</button>
 		</div>
-		<div class="hamstercito">
-			<!-- <video autoplay muted loop src="media/FEHhZXTXEAYEj9X.mp4"></video> -->
-		</div>
 	</div>
+	<div class="hamstercito">
+		<!-- <video autoplay muted loop src="media/FEHhZXTXEAYEj9X.mp4"></video> -->
+	</div>
+	<c:if test="${flash != null}">
+		<div id="gbye-popup" class="popup active">
+			<div class="transparent-label"></div>
+			<div id="gbye-msg" class="username-popup active">
+				<span><c:out value="${flash}" /></span>
+				<button class="popup-btn">Cerrar</button>
+			</div>
+		</div>
+	</c:if>
 </body>
-
 </html>

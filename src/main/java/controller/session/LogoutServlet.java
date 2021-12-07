@@ -20,7 +20,7 @@ public class LogoutServlet extends HttpServlet {
 		req.setAttribute("flash", "¡Hasta pronto!");
 		
 		RequestDispatcher dispatcher = getServletContext()
-  		      .getRequestDispatcher("/login.jsp");
+  		      .getRequestDispatcher("/index.jsp");
   		    dispatcher.forward(req, resp); 	
     }
 }

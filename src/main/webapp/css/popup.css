@@ -87,7 +87,7 @@
 	transition: all 200ms ease-in-out;
 }
 
-.popup .popup-btn {
+.popup-btn {
 	width: 100%;
 	display: flex;
 	text-align: center;
@@ -106,7 +106,7 @@
 	transition: all .3s ease;
 }
 
-.popup .popup-btn:hover {
+.popup-btn:hover {
 	background-color: rgba(250, 107, 107, 0.8);
 	transition: all .3s ease;
 }
