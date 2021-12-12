@@ -97,4 +97,17 @@ public class PromotionDAO {
 			throw new MissingDataException(e);
 		}
 	}
+
+	public static boolean delete(int id) {
+		String query = "DELETE FROM promociones WHERE id = ?";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
 }

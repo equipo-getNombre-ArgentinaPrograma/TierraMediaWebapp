@@ -31,4 +31,9 @@ public class PorcentualProm extends Promotion {
 		super.printToScreen();
 		System.out.println("Descuento: " + getDiscount() + "%.");
 	}
+
+	@Override
+	public String getPromotionType() {
+		return "Porcentual";
+	}
 }

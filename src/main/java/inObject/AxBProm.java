@@ -45,4 +45,9 @@ public class AxBProm extends Promotion {
 		super.printToScreen();
 		System.out.println("Promocion de regalo: " + getFreeAttraction().getName());
 	}
+
+	@Override
+	public String getPromotionType() {
+		return "AxB";
+	}
 }

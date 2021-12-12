@@ -16,6 +16,10 @@ public abstract class Promotion implements Acquirable {
 	}
 
 // Getters
+	public String getName() {
+		return "Promocion " + getAttractionType();
+	}
+
 	public Attraction getAttraction1() {
 		return includedAttractions.get(0);
 	}
@@ -44,7 +48,25 @@ public abstract class Promotion implements Acquirable {
 		return calculateCompletionTime();
 	}
 
-// Suma los precios de las dos atracciones
+	public String getDescription() {
+		String out = "Esta promocion incluye: ";
+		for (Attraction attraction : getIncludedAttractions()) {
+			out += attraction.getName() + ". ";
+		}
+		return out;
+	}
+	
+	public abstract String getPromotionType();
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public void setCompletionTime(double completionTime) {
+		CompletionTime = completionTime;
+	}
+
+	// Suma los precios de las dos atracciones
 	protected double calculatePrice() {
 		this.price = 0;
 		this.price += getAttraction1().getPrice();
@@ -82,7 +104,7 @@ public abstract class Promotion implements Acquirable {
 	public boolean shareAttraction(Object object) {
 		if (object instanceof Attraction)
 			for (Attraction atraccion : includedAttractions)
-				if (((Attraction)object).shareAttraction(atraccion))
+				if (((Attraction) object).shareAttraction(atraccion))
 					return true;
 		if (object instanceof Promotion)
 			for (Attraction atraccion : includedAttractions)
@@ -103,11 +125,11 @@ public abstract class Promotion implements Acquirable {
 				+ getAttraction2().getName() + ".\nDuracion: " + getCompletionTime() + " hora/s.\nPrecio: " + getPrice()
 				+ " moneda/s.");
 	}
-	
+
 	public int hashCode() {
 		int hash = 0;
-		for(Attraction attraction : includedAttractions)
+		for (Attraction attraction : includedAttractions)
 			hash += attraction.getName().hashCode();
-		return hash;	
+		return hash;
 	}
 }

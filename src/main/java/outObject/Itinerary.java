@@ -18,8 +18,8 @@ public class Itinerary {
 	public User getUser() {
 		return user;
 	}
-	
-	public ArrayList<Acquirable> getAcquiredSuggestions(){
+
+	public ArrayList<Acquirable> getAcquiredSuggestions() {
 		return getUser().getAcquiredSuggestions();
 	}
 
@@ -30,10 +30,13 @@ public class Itinerary {
 	public double getSpentTime() {
 		return UserDAO.getSpentTime(user.getId());
 	}
+
 	public void print() {
 		if (getAcquiredSuggestions().size() > 0)
 			ItineraryDAO.print(user, getSpentCoins(), getSpentTime());
 	}
 
-
+	public String getPurchaseInfo(Acquirable suggestion, int selection) {
+		return UserDAO.getPurchaseInfo(suggestion, user.getId(), selection);
+	}
 }

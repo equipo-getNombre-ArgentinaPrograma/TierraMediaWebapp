@@ -15,4 +15,9 @@ public class AbsoluteProm extends Promotion {
 		return price;
 	}
 
+	@Override
+	public String getPromotionType() {
+		return "Absoluta";
+	}
+
 }

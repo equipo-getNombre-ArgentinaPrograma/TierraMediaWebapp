@@ -19,19 +19,18 @@ public class SuggestionGenerator {
 	private Acquirable suggestion;
 	private Integer key;
 
-// Genera las listas con los datos leidos del archivo
 	public SuggestionGenerator() {
-		this.attractions = AttractionDAO.getAll();
-		this.promos = PromotionDAO.getAll();
 	}
 
 // Devuelve el objeto usuario al cual esta ligado el sistema
 	public User getUser() {
 		return user;
 	}
-
-// Guarda las promociones aptas para el usuario en una lista
+// Genera las listas con los datos leidos del archivo y
+// guarda las promociones aptas para el usuario en una lista
 	public void to(User user) {
+		this.attractions = AttractionDAO.getAll();
+		this.promos = PromotionDAO.getAll();
 		this.user = user;
 		initialiceLists();
 	}
@@ -55,6 +54,18 @@ public class SuggestionGenerator {
 				suggestionsByPriority.put(key, queue);
 			}
 		}
+	}
+
+	public ArrayList<Acquirable> getSuggestionList() {
+		System.out.println("Se buscan sugerencias para el usuario...");
+		ArrayList<Acquirable> suggestions = new ArrayList<Acquirable>();
+		for (Map.Entry<Integer, PriorityQueue<Acquirable>> entry : this.suggestionsByPriority.entrySet())
+			while (entry.getValue().size() > 0) {
+				suggestion = entry.getValue().poll();
+//				if (getUser().canBuy(suggestion))
+					suggestions.add(suggestion);
+			}
+		return suggestions;
 	}
 
 // Devuelve 0 si la sugerencia es del tipo preferido y 1 si no lo es,
@@ -91,7 +102,7 @@ public class SuggestionGenerator {
 	public void rejectPromotion() {
 		System.out.println("Rechazaste la promocion, no volveremos a sugerirla.");
 	}
-	
+
 //Se agrega una promocion a la lista
 	public void addPromotion(Promotion promotion) {
 		promos.add(promotion);

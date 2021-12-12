@@ -1,13 +1,4 @@
-document.querySelector(".login").addEventListener("click", showLoginPopup) //muestra el popup de login
-document.querySelector(".forgot-username-link").addEventListener("click", showUsernamePopup) //muestra el popup de usuario olvidado
-
-document.querySelector(".popup .close-btn").addEventListener("click", hidePopup) //cierra el popup de login
-document.querySelector(".username-popup .popup-btn").addEventListener("click", hidePopup) //cierra el popup de usuario olvidado
-document.querySelector("#gbye-msg .popup-btn").addEventListener("click", hidePopup) //cierra el popup de usuario olvidado
-document.querySelector(".popup .transparent-label").addEventListener("click", hidePopup) //cierra los popups cuando se hace click fuera de la ventana
-document.querySelector("#gbye-popup .transparent-label").addEventListener("click", hidePopup) //cierra los popups cuando se hace click fuera de la ventana
-document.getElementById("visibility-btn").addEventListener("click", togglePasswordVisibility)
-
+//functions
 function showLoginPopup() {
 	document.querySelector(".popup").classList.add("active")
 	document.querySelector(".login-popup").classList.add("active")
@@ -22,8 +13,8 @@ function hidePopup() {
 	document.querySelector(".popup").classList.remove("active")
 	document.querySelector(".login-popup").classList.remove("active")
 	document.querySelector(".username-popup").classList.remove("active")
-	$("#gbye-msg").removeClass("active")
-	$("#gbye-popup").removeClass("active")
+	$("#log-msg").removeClass("active")
+	$("#log-popup").removeClass("active")
 }
 
 function togglePasswordVisibility() {
@@ -39,8 +30,10 @@ function togglePasswordVisibility() {
 	}
 }
 
-document.querySelector('#username').addEventListener('input', inputUserError)
-document.querySelector('#password').addEventListener('input', inputPasswordError)
+function showUsernamePopup() {
+	document.querySelector(".login-popup").classList.remove("active")
+	document.querySelector(".username-popup").classList.add("active")
+}
 
 document.querySelector('.login-popup').addEventListener('click', function() {
 	$("#username").removeClass("has-error")
@@ -70,6 +63,26 @@ function inputPasswordError() {
 		$(".pass-err-msg").removeClass("input-error")
 	}
 }
+document.querySelector("#log-msg .popup-btn").addEventListener("click", hidePopup)
+document.querySelector("#log-popup .transparent-label").addEventListener("click", hidePopup)
+
+document.getElementById('log-btn').addEventListener("click", function(){
+	$('#log-popup').addClass('active')
+	$('#log-msg').addClass('active')
+})
+
+
+
+document.querySelector(".login").addEventListener("click", this.showLoginPopup)
+document.querySelector(".popup .transparent-label").addEventListener("click", hidePopup) 
+document.querySelector(".popup .close-btn").addEventListener("click", hidePopup)
+
+document.getElementById("visibility-btn").addEventListener("click", togglePasswordVisibility)
+document.querySelector('#username').addEventListener('input', inputUserError)
+document.querySelector('#password').addEventListener('input', inputPasswordError)
+
+document.querySelector(".forgot-username-link").addEventListener("click", showUsernamePopup)
+document.querySelector(".username-popup .popup-btn").addEventListener("click", hidePopup)
 
 var msj = null
 function login() {
@@ -85,7 +98,7 @@ function login() {
 			msj = response[0].status
 			if (msj === "1") {
 				document.querySelector(".login-err-msg").classList.remove("active")
-				window.location.replace("test.jsp")
+				window.location.replace("index.jsp")
 			}
 			else if (msj === "2") {
 				document.querySelector(".login-err-msg").classList.add("active")
@@ -93,5 +106,5 @@ function login() {
 		}
 
 	})
-}
 
+}

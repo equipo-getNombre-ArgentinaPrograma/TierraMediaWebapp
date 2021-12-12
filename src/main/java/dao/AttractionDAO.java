@@ -16,8 +16,10 @@ public class AttractionDAO {
 		String name = resultSet.getString("name");
 		Double price = resultSet.getDouble("price");
 		Double completionTime = resultSet.getDouble("completion_time");
+		Integer quota = resultSet.getInt("quota");
 		String type = resultSet.getString("type");
-		return new Attraction(id, name, price, completionTime, type);
+		String description = resultSet.getString("description");
+		return new Attraction(id, name, price, completionTime, quota, type, description);
 	}
 
 // Devuelve todas las atracciones en la base de datos
@@ -136,6 +138,68 @@ public class AttractionDAO {
 				preparedStatement.setInt(1, attraction.getId());
 				preparedStatement.executeUpdate();
 			}
+			return true;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+	public static int newAttraction(Attraction attraction) {
+		String query = "INSERT INTO atracciones (id, name, price, completion_time, quota, initial_quota, type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, attraction.getId());
+			preparedStatement.setString(2, attraction.getName());
+			preparedStatement.setDouble(3, attraction.getPrice());
+			preparedStatement.setDouble(4, attraction.getCompletionTime());
+			preparedStatement.setInt(5, attraction.getQuotaByDay());
+			preparedStatement.setInt(6, attraction.getQuotaByDay());
+			preparedStatement.setString(7, attraction.getAttractionType());
+			return preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+	public static int size() {
+		String query = "SELECT count(*) AS size FROM atracciones";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			return resultSet.getInt("size");
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+	public static int update(Integer id, String name, Double cost, Double duration, Integer capacity,
+			String description) {
+		String query = "UPDATE atracciones SET name = ?, price = ?, completion_time = ?, quota = ?, initial_quota = ?, description = ? WHERE id = ?";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, name);
+			preparedStatement.setDouble(2, cost);
+			preparedStatement.setDouble(3, duration);
+			preparedStatement.setInt(4, capacity);
+			preparedStatement.setInt(5, capacity);
+			preparedStatement.setString(6, description);
+			preparedStatement.setInt(7, id);
+			return preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+	public static boolean delete(int id) {
+		String query = "DELETE FROM atracciones WHERE id = ?";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			preparedStatement.executeUpdate();
 			return true;
 		} catch (Exception e) {
 			throw new MissingDataException(e);

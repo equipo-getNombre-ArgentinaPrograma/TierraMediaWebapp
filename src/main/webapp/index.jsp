@@ -4,9 +4,12 @@
 <html lang="es">
 
 <head>
+<link rel="stylesheet" type="text/css"
+	href="/Proyecto-Web/css/normalize.css">
 <jsp:include page="partials/head.jsp"></jsp:include>
+<script src="/Proyecto-Web/js/login.js" defer></script>
+<script src="/Proyecto-Web/js/serverResponse.js" defer></script>
 </head>
-
 <body>
 	<c:choose>
 		<c:when test="${user == null}">
@@ -16,12 +19,31 @@
 			<jsp:include page="partials/nav-logged.jsp"></jsp:include>
 		</c:otherwise>
 	</c:choose>
+	<div id="overrides-bootstrap">
+		<header class="header">
+			<div class="header-video">
+				<video src="/Proyecto-Web/media/header-video.mp4" autoplay loop
+					muted></video>
+			</div>
+		</header>
+	</div>
 	<div class="header-container">
 		<div class="header-center">
 			<div class="blank-div"></div>
 			<div class="header-title">
 				<h1>Encontra el destino que buscas.</h1>
-				<p>Inicia sesion para armar tu itinerario:</p>
+				<c:choose>
+					<c:when test="${user == null}">
+						<p>Inicia sesion para armar tu itinerario:</p>
+						<div
+							style="width: 10%; position: absolute; top: 130%; right: 50%; transform: translate(50%, -50%)">
+							<button id="log-btn" class="popup-btn">Haceme click!</button>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<p>Ya podes empezar a comprar:</p>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</div>
@@ -56,21 +78,58 @@
 			</div>
 		</div>
 		<div id="forget-user-msg" class="username-popup">
-			<span>Mala suerte pa, create otro.</span>
+			<span>Mala suerte :c</span>
 			<button class="popup-btn">Volver</button>
 		</div>
 	</div>
-	<div class="hamstercito">
-		<!-- <video autoplay muted loop src="media/FEHhZXTXEAYEj9X.mp4"></video> -->
-	</div>
 	<c:if test="${flash != null}">
-		<div id="gbye-popup" class="popup active">
+		<div id="popup" class="popup active">
 			<div class="transparent-label"></div>
-			<div id="gbye-msg" class="username-popup active">
+			<div id="msg" class="username-popup active">
 				<span><c:out value="${flash}" /></span>
 				<button class="popup-btn">Cerrar</button>
 			</div>
 		</div>
 	</c:if>
+
+	<div id="log-popup" class="popup">
+		<div class="transparent-label"></div>
+		<div id="log-msg" class="username-popup">
+			<p style="text-align: center">Hola! Gracias por probar estar
+				probando web, para entrar por primera vez podes entrar con un
+				admin/admin y asi crearte tu usuario.</p>
+			<p>Para conectar la base de datos hay que editar el archivo /src/main/resources</p>
+			<p>Dejo una lista con algunos bugs que note o cosas que
+				directamente faltan:</p>
+			<ul>
+				<li>No se loguea si fuiste redireccionado desde otro lado que
+					no sea logout.</li>
+				<li>No se implementan contrasenias.</li>
+				<li>Si se eliminan atracciones tira error por todos ya que no
+					se borran de los itinerarios o las promociones.</li>
+				<li>No se crean atracciones.</li>
+				<li>No se verifican los datos al agregar/editar usuarios o
+					atracciones.</li>
+				<li>No se pueden crear ni editar promociones.</li>
+			</ul>
+			<p>Esta ultima semana fue un poco a las corridas, sepan
+				disculpar.</p>
+			<p>Saludos, equipo.getNombre()</p>
+			<button class="popup-btn">Cerrar</button>
+		</div>
+	</div>
+	<div class="easteregg" style="position: absolute; top: 0; right: 0">
+		<i style="color: white; opacity: 0.1"><span class="material-icons">visibility</span></i>
+	</div>
+	<div class="hamstercito">
+		<video autoplay muted loop src="media/FEHhZXTXEAYEj9X.mp4"></video>
+	</div>
+	<script>
+		document.querySelector('.easteregg').addEventListener('click',
+				function() {
+					$('.hamstercito').addClass('active');
+					$('.easteregg').hide();
+				})
+	</script>
 </body>
 </html>

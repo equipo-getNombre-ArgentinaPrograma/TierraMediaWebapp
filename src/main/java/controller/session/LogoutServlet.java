@@ -19,6 +19,8 @@ public class LogoutServlet extends HttpServlet {
     	req.getSession().removeAttribute("user");
 		req.setAttribute("flash", "¡Hasta pronto!");
 		
+		System.out.println("Se cierra una sesion");
+		
 		RequestDispatcher dispatcher = getServletContext()
   		      .getRequestDispatcher("/index.jsp");
   		    dispatcher.forward(req, resp); 	
