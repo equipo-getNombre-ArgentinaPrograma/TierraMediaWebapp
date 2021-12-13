@@ -40,7 +40,7 @@
 			<tbody>
 				<c:forEach items="${suggestions}" var="suggestion">
 					<tr>
-						<td><strong><c:out value="${suggestion.getName()}"></c:out>:
+						<td><strong><c:out value="${suggestion.getPrintName()}"></c:out>:
 						</strong></td>
 						<td><c:out value="${suggestion.getDescription()}"></c:out></td>
 						<td><c:out value="${suggestion.getPrice()}"></c:out></td>

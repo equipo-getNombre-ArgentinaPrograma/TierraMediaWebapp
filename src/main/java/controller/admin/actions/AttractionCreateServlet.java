@@ -7,11 +7,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import inObject.Attraction;
 import services.AcquirableService;
 
-@WebServlet("/suggestions/createA.do")
-public class CreateAttractionServlet extends HttpServlet {
+@WebServlet("/admin/suggestions/createA.do")
+public class AttractionCreateServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 3455721046062278592L;
 	private AcquirableService acquirableService;
@@ -24,28 +23,26 @@ public class CreateAttractionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/suggestions/createAttraction.jsp");
+		req.setAttribute("choose", 1);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/create.jsp");
 		dispatcher.forward(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		RequestDispatcher dispatcher;
 		String name = req.getParameter("name");
-		Double cost = Double.parseDouble(req.getParameter("cost"));
+		Double price = Double.parseDouble(req.getParameter("price"));
 		Double duration = Double.parseDouble(req.getParameter("duration"));
-		Integer capacity = Integer.parseInt(req.getParameter("capacity"));
+		Integer quota = Integer.parseInt(req.getParameter("quota"));
 		String type = req.getParameter("type");
 		String description = req.getParameter("description");
 
-		Attraction attraction = acquirableService.createAttraction(name, cost, duration, capacity, type, description);
-		if (attraction.isValid()) {
-			resp.sendRedirect("/turismo/attractions/index.do");
-		} else {
-			req.setAttribute("attraction", attraction);
-
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/suggestions/create.jsp");
-			dispatcher.forward(req, resp);
-		}
+		if (acquirableService.createAttraction(name, price, duration, quota, type, description))
+			req.setAttribute("flash", "¡Se ha creado la atraccion!");
+		else
+			req.setAttribute("flash", "Hubo un error.");
+		dispatcher = getServletContext().getRequestDispatcher("/user/admin.do");
+		dispatcher.forward(req, resp);
 	}
 }

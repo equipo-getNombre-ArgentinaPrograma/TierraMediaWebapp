@@ -16,7 +16,7 @@ public abstract class Promotion implements Acquirable {
 	}
 
 // Getters
-	public String getName() {
+	public String getPrintName() {
 		return "Promocion " + getAttractionType();
 	}
 
@@ -39,6 +39,10 @@ public abstract class Promotion implements Acquirable {
 	public double getPrice() {
 		return calculatePrice();
 	}
+	
+	public double getDiscount() {
+		return 0d;
+	}
 
 	public String getAttractionType() {
 		return AttractionType;
@@ -58,6 +62,14 @@ public abstract class Promotion implements Acquirable {
 	
 	public abstract String getPromotionType();
 
+	public int getQuotaByDay() {
+		int minimumQuota = getAttraction1().getQuotaByDay();
+		for(Attraction attraction : getIncludedAttractions())
+			if(attraction.getQuotaByDay() < minimumQuota)
+				minimumQuota = attraction.getQuotaByDay();
+		return minimumQuota;
+	}
+	
 	public void setPrice(double price) {
 		this.price = price;
 	}

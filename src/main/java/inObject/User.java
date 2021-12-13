@@ -2,21 +2,22 @@ package inObject;
 
 import java.util.ArrayList;
 import dao.UserDAO;
-//import utils.Crypt;
 
 public class User {
 	private ArrayList<Acquirable> acquiredSuggestions = new ArrayList<Acquirable>();
 	private int id;
-	private String name;
+	private String username;
+	private String password;
 	private double availableCoins;
 	private double availableTime;
 	private String preferredType;
 
 	private int admin;
 
-	public User(Integer id, String name, double coins, double time, String type, int admin) {
+	public User(Integer id, String username, double coins, double time, String type, int admin) {
 		this.id = id;
-		this.name = name;
+		this.username = username;
+		this.password = getPassword();
 		this.availableCoins = coins;
 		this.availableTime = time;
 		this.preferredType = type;
@@ -29,7 +30,11 @@ public class User {
 	}
 
 	public String getName() {
-		return name;
+		return username;
+	}
+	
+	public String getPassword() {
+		return UserDAO.getPassword(id);
 	}
 
 	public double getAvailableCoins() {
@@ -61,7 +66,7 @@ public class User {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.username = name;
 	}
 
 	public void setAvailableCoins(double availableCoins) {
@@ -90,7 +95,7 @@ public class User {
 			this.availableCoins -= suggestion.getPrice();
 			updateDB(suggestion);
 			suggestion.useQuota();
-			System.out.println("user <" + getName() + "> adquirio " + suggestion.getName() + ".\nLe quedan: "
+			System.out.println("user <" + getName() + "> adquirio " + suggestion.getPrintName() + ".\nLe quedan: "
 					+ getAvailableTime() + "monedas y " + getAvailableCoins() + "horas");
 			return true;
 		}
@@ -142,8 +147,7 @@ public class User {
 	}
 
 	public boolean checkPassword(String password) {
-		// return Crypt.match(password, this.password);
-		return true;
+		return this.password.equals(password);
 	}
 
 }

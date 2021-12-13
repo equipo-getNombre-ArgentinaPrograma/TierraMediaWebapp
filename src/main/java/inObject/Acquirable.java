@@ -2,8 +2,8 @@ package inObject;
 
 public interface Acquirable {
 	
-	public String getName();
-
+	public String getPrintName();
+	
 	public int getId();
 
 	public double getPrice();
@@ -14,6 +14,8 @@ public interface Acquirable {
 	
 	public String getDescription();
 
+	public int getQuotaByDay();
+	
 	public boolean useQuota();
 
 	public boolean isFull();

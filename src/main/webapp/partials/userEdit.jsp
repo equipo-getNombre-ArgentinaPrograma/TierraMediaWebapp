@@ -21,19 +21,11 @@
 			min="0" step="1" max="999999">
 	</div>
 	<div class="mb-3">
-		<label for="type">Tipo preferido:</label> <select name="type"
+		<label for="cars">Tipo preferido:</label> <select name="type"
 			id="type">
 			<option value="aventura">Aventura</option>
 			<option value="degustacion">Degustacion</option>
 			<option value="paisaje">Paisaje</option>
-		</select>
-	</div>
-	
-	<div class="mb-3">
-		<label for="admin">Dar permisos de administrador?:</label> <select name="admin"
-			id="admin">
-			<option value="0">No</option>
-			<option value="1">Si</option>
 		</select>
 	</div>
 	<div>

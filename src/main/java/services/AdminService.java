@@ -34,18 +34,26 @@ public class AdminService {
 		return suggestions;
 	}
 
-	public boolean createUser(String name, Double coins, Double time, String type, Integer admin) {
+	public boolean createUser(String name, String password, Double coins, Double time, String type, Integer admin) {
 		int lastId = getUsers().get(getUsers().size() - 1).getId();
-		int newUserId = lastId + 1;
-		User user = new User(newUserId, name, coins, time, type, admin);
+		int newId = lastId + 1;
+		UserDAO.createPassword(newId, password);
+		User user = new User(newId, name, coins, time, type, admin);
 		return addUser(user);
 	}
-	
+
 	public boolean addUser(User user) {
 		return UserDAO.newUser(user) == 1;
 	}
 
 	public boolean deleteUser(int userId) {
 		return UserDAO.delete(userId);
+	}
+
+	public boolean editUser(Integer userId, String name, String password, Double coins, Double time, String type) {
+		User user = new User(0, name, coins, time, type, 0);
+		return UserDAO.editUser(userId, user) != 0 
+			&& UserDAO.setPassword(userId, password) != 0;
+
 	}
 }

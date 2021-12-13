@@ -368,13 +368,59 @@ public class UserDAO {
 		}
 	}
 
-	public static int size() {
-		String query = "SELECT count(*) AS size FROM usuarios";
+	public static int editUser(Integer userId, User user) {
+		String query = "UPDATE usuarios SET name = ?, available_coins = ?, available_time = ?, preferred_type = ? WHERE usuarios.id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, user.getName());
+			preparedStatement.setDouble(2, user.getAvailableCoins());
+			preparedStatement.setDouble(3, user.getAvailableTime());
+			preparedStatement.setString(4, user.getPreferredType());
+			preparedStatement.setInt(5, userId);
+			return preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+	public static String getPassword(int id) {
+		String ans = null;
+		String query = "SELECT password FROM contrasenias WHERE user_id = ?";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
-			return resultSet.getInt("size");
+			while (resultSet.next())
+				ans = resultSet.getString("password");
+			return ans;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+	public static int setPassword(int id, String password) {
+		String query = "UPDATE contrasenias SET password = ? WHERE user_id = ?";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, password);
+			preparedStatement.setInt(2, id);
+			return preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+	public static int createPassword(int id, String password) {
+		String query = "INSERT INTO contrasenias (user_id, password) VALUES (?, ?)";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			preparedStatement.setString(2, password);
+			return preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			throw new MissingDataException(e);
 		}

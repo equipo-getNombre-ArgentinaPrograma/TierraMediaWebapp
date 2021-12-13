@@ -1,6 +1,8 @@
 package controller.admin.actions;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import inObject.Acquirable;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,11 +11,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import services.AdminService;
 
-@WebServlet("/admin/users/delete.do")
-public class DeleteUserServlet extends HttpServlet {
-
-	private static final long serialVersionUID = 3455721046062278592L;
-	private AdminService adminService;
+@WebServlet("/admin/suggestions.do")
+public class SuggestionShowServlet extends HttpServlet {
+	AdminService adminService;
+	private static final long serialVersionUID = 345572104606278592L;
 
 	@Override
 	public void init() throws ServletException {
@@ -23,14 +24,10 @@ public class DeleteUserServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Integer userId = Integer.parseInt(req.getParameter("id"));
-		
-		if (adminService.deleteUser(userId)) {
-			req.setAttribute("flash", "Se ha eliminado el usuario");
-		} else
-			req.setAttribute("flash", "Ha ocurrido un error con la accion");
-
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/admin/users.do");
+		ArrayList<Acquirable> suggestions = adminService.getSuggestions();
+		req.setAttribute("suggestions", suggestions);
+		req.setAttribute("choose", 1);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/admin.jsp");
 		dispatcher.forward(req, resp);
 	}
 }

@@ -1,6 +1,7 @@
 package controller.admin.actions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -8,11 +9,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import inObject.User;
+import outObject.Purchase;
 import services.AdminService;
 
-@WebServlet("/user/admin.do")
-public class ShowAdminPanelServlet extends HttpServlet {
+@WebServlet("/admin/history.do")
+public class PurchasesShowServlet extends HttpServlet {
 	AdminService adminService;
 	private static final long serialVersionUID = 345572104606278592L;
 
@@ -24,15 +25,10 @@ public class ShowAdminPanelServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		User user = (User) req.getSession().getAttribute("user");
-		RequestDispatcher dispatcher;
-		if (adminService.isAdmin(user)) {
-			req.setAttribute("choose", 0);
-			dispatcher = getServletContext().getRequestDispatcher("/views/admin.jsp");
-		} else {
-			req.setAttribute("flash", "No posee los permisos necesarios para acceder.");
-			dispatcher = getServletContext().getRequestDispatcher("/user.jsp");
-		}
+		ArrayList<Purchase> purchases = adminService.getHistory();
+		req.setAttribute("purchases", purchases);
+		req.setAttribute("choose", 3);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/admin.jsp");
 		dispatcher.forward(req, resp);
 	}
 }

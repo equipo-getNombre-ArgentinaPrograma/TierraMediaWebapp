@@ -145,7 +145,7 @@ public class AttractionDAO {
 	}
 
 	public static int newAttraction(Attraction attraction) {
-		String query = "INSERT INTO atracciones (id, name, price, completion_time, quota, initial_quota, type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO atracciones (id, name, price, completion_time, quota, initial_quota, type, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -156,6 +156,7 @@ public class AttractionDAO {
 			preparedStatement.setInt(5, attraction.getQuotaByDay());
 			preparedStatement.setInt(6, attraction.getQuotaByDay());
 			preparedStatement.setString(7, attraction.getAttractionType());
+			preparedStatement.setString(8, attraction.getDescription());
 			return preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -195,12 +196,46 @@ public class AttractionDAO {
 
 	public static boolean delete(int id) {
 		String query = "DELETE FROM atracciones WHERE id = ?";
+		if (deleteFromPromotions(id)) {
+			try {
+				Connection connection = ConnectionProvider.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setInt(1, id);
+				preparedStatement.executeUpdate();
+				return true;
+			} catch (Exception e) {
+				throw new MissingDataException(e);
+			}
+		}
+		return false;
+	}
+
+	private static boolean deleteFromPromotions(int id) {
+		String query = "SELECT p.id FROM promociones p INNER JOIN atracciones_en_promociones aep ON p.id = aep.promotion_id  WHERE aep.attraction_id = ?";
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
-			preparedStatement.executeUpdate();
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next())
+				PromotionDAO.delete(resultSet.getInt("id"));
 			return true;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
+	public static int editAttraction(Integer attractionId, Attraction attraction) {
+		String query = "UPDATE atracciones SET price = ?, completion_time = ?, quota = ?, description = ? WHERE atracciones.id = ?";
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setDouble(1, attraction.getPrice());
+			preparedStatement.setDouble(2, attraction.getCompletionTime());
+			preparedStatement.setInt(3, attraction.getQuotaByDay());
+			preparedStatement.setString(4, attraction.getDescription());
+			preparedStatement.setInt(5, attractionId);
+			return preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			throw new MissingDataException(e);
 		}

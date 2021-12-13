@@ -13,6 +13,7 @@ function hidePopup() {
 	document.querySelector(".popup").classList.remove("active")
 	document.querySelector(".login-popup").classList.remove("active")
 	document.querySelector(".username-popup").classList.remove("active")
+	document.getElementById("login-form").reset();
 	$("#log-msg").removeClass("active")
 	$("#log-popup").removeClass("active")
 }
@@ -85,12 +86,14 @@ document.querySelector(".forgot-username-link").addEventListener("click", showUs
 document.querySelector(".username-popup .popup-btn").addEventListener("click", hidePopup)
 
 var msj = null
+var rootUrl = window.location.origin + '/Proyecto-Web'
+console.log(rootUrl)
 function login() {
 	var data = $("#login-form").serialize()
-	console.log(data)
+	console.log(rootUrl)
 	$.ajax({
 		type: 'POST',
-		url: 'login',
+		url: rootUrl + '/login',
 		data: data,
 		dataType: 'JSON',
 
@@ -98,7 +101,7 @@ function login() {
 			msj = response[0].status
 			if (msj === "1") {
 				document.querySelector(".login-err-msg").classList.remove("active")
-				window.location.replace("index.jsp")
+				window.location.replace(rootUrl + '/index.jsp')
 			}
 			else if (msj === "2") {
 				document.querySelector(".login-err-msg").classList.add("active")

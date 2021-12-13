@@ -30,13 +30,13 @@
 	<main class="container">
 	<c:choose>
 		<c:when test="${choose == 0 }">
-			<form action="/Proyecto-Web/admin/users/add.do" method="post">
-				<jsp:include page="/partials/userForm.jsp"></jsp:include>
+			<form action="/Proyecto-Web/admin/users/edit.do" method="post">
+				<jsp:include page="/partials/userEdit.jsp"></jsp:include>
 			</form>
 		</c:when>
 		<c:when test="${choose == 1 }">
-			<form action="/Proyecto-Web/admin/suggestions/createA.do" method="post">
-				<jsp:include page="/partials/attractionForm.jsp"></jsp:include>
+			<form action="/Proyecto-Web/admin/suggestions/editA.do" method="post">
+				<jsp:include page="/partials/attractionEdit.jsp"></jsp:include>
 			</form>
 		</c:when>
 		<c:when test="${choose == 2 }">

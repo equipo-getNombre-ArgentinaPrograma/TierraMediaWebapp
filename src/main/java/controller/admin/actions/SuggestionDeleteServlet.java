@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import services.AcquirableService;
 
-@WebServlet("/suggestions/delete.do")
-public class DeleteSuggestionServlet extends HttpServlet {
+@WebServlet("/admin/suggestions/delete.do")
+public class SuggestionDeleteServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 3455721046062278592L;
 	private AcquirableService acquirableService;

@@ -50,6 +50,8 @@
 							<th>Descripcion</th>
 							<th>Costo</th>
 							<th>Tiempo</th>
+							<th>Cupos</th>
+							<th>Descuento</th>
 							<th>Accion</th>
 						</tr>
 					</thead>
@@ -59,7 +61,7 @@
 								<c:forEach items="${suggestions}" var="suggestion">
 									<tr>
 										<td><strong><c:out
-													value="${suggestion.getName()}"></c:out></strong></td>
+													value="${suggestion.getPrintName()}"></c:out></strong></td>
 										<td>#<c:out value="${suggestion.getId()}"></c:out></td>
 										<td><c:out value="${suggestion.getAttractionType()}"></c:out></td>
 										<td><c:if test="${suggestion.isPromotion()}">
@@ -68,11 +70,26 @@
 										<td><c:out value="${suggestion.getDescription()}"></c:out></td>
 										<td><c:out value="${suggestion.getPrice()}"></c:out></td>
 										<td><c:out value="${suggestion.getCompletionTime()}"></c:out></td>
+										<td><c:out value="${suggestion.getQuotaByDay()}"></c:out></td>
+										<td><c:if test="${suggestion.isPromotion()}">
+												<c:out value="${suggestion.getDiscount()}"></c:out>
+											</c:if></td>
 										<td><a
-											href="/Proyecto-Web/suggestions/delete.do?id=${suggestion.getId()}&&prom=${suggestion.isPromotion()}"
-											class="btn btn-danger w-100 rounded-0">Eliminar</a><a
-											href="/Proyecto-Web/suggestions/edit.do?id=${suggestion.getId()}&&prom=${suggestion.isPromotion()}"
-											class="btn btn-warning w-100 disabled rounded-0">Editar</a></td>
+											href="/Proyecto-Web/admin/suggestions/delete.do?id=${suggestion.getId()}&&prom=${suggestion.isPromotion()}"
+											class="btn btn-danger w-100 rounded-0">Eliminar</a>
+											<c:choose>
+												<c:when test="${suggestion.isPromotion()}">
+													<a
+														href="/Proyecto-Web/admin/suggestions/editA.do?id=${suggestion.getId()}"
+														class="btn btn-warning disabled w-100 rounded-0">Editar</a>
+												</c:when>
+												<c:otherwise>
+													<a
+														href="/Proyecto-Web/admin/suggestions/editP.do?id=${suggestion.getId()}"
+														class="btn btn-warning w-100 rounded-0">Editar</a>
+												</c:otherwise>
+											</c:choose>
+										</td>
 									</tr>
 								</c:forEach>
 							</c:when>
@@ -84,9 +101,9 @@
 						</c:choose>
 					</tbody>
 				</table>
-				<a hre="/Proyecto-Web/suggestions/addA.do"
-					class="btn btn-warning disabled rounded mb-3">Agregar Atraccion</a>
-				<a hre="/Proyecto-Web/suggestions/addP.do"
+				<a href="/Proyecto-Web/admin/suggestions/createA.do"
+					class="btn btn-warning rounded mb-3">Agregar Atraccion</a>
+				<a href="/Proyecto-Web/admin/suggestions/createP.do"
 					class="btn btn-warning disabled rounded mb-3">Agregar Promocion</a>
 			</c:when>
 
@@ -95,9 +112,11 @@
 					<thead class="table-dark">
 						<tr>
 							<th>Nombre</th>
+							<th>Contraseña</th>
 							<th>ID</th>
 							<th>Monedas disponibles</th>
 							<th>Tiempo disponible</th>
+							<th>Tipo preferido</th>
 							<th>Monedas gastadas</th>
 							<th>Tiempo gastado</th>
 							<th>Accion</th>
@@ -109,9 +128,11 @@
 								<c:forEach items="${users}" var="user">
 									<tr>
 										<td><strong><c:out value="${user.getName()}"></c:out></strong></td>
+										<td><strong><c:out value="${user.getPassword()}"></c:out></strong></td>
 										<td>#<c:out value="${user.getId()}"></c:out></td>
 										<td><c:out value="${user.getAvailableCoins()}"></c:out></td>
 										<td><c:out value="${user.getAvailableTime()}"></c:out></td>
+										<td><c:out value="${user.getPreferredType()}"></c:out></td>
 										<td><c:out value="${user.getSpentCoins()}"></c:out></td>
 										<td><c:out value="${user.getSpentTime()}"></c:out></td>
 										<td><c:choose>
@@ -119,8 +140,9 @@
 													<a
 														href="/Proyecto-Web/admin/users/delete.do?id=${user.getId()}"
 														class="btn btn-danger w-100 rounded-0">Eliminar</a>
-													<a href="/Proyecto-Web/users/edit.do"
-														class="btn btn-warning disabled w-100 rounded-0">Editar</a>
+													<a
+														href="/Proyecto-Web/admin/users/edit.do?id=${user.getId()}"
+														class="btn btn-warning w-100 rounded-0">Editar</a>
 												</c:when>
 												<c:otherwise>
 													<a id="purchase-btn"
@@ -140,7 +162,7 @@
 						</c:choose>
 					</tbody>
 				</table>
-				<a href="/Proyecto-Web/users/add.do" id="purchase-btn"
+				<a href="/Proyecto-Web/admin/users/add.do" id="purchase-btn"
 					class="btn btn-warning rounded mb-3">Agregar Usuario</a>
 			</c:when>
 
@@ -162,7 +184,8 @@
 								<c:forEach items="${purchases}" var="purchase">
 									<tr>
 										<td><strong><c:out
-													value="${purchase.getSuggestion().getName()}"></c:out>: </strong> <span><c:out
+													value="${purchase.getSuggestion().getPrintName()}"></c:out>:
+										</strong> <span><c:out
 													value="${purchase.getSuggestion().getDescription()}"></c:out></span></td>
 										<td><c:out value="${purchase.getSuggestion().getPrice()}"></c:out></td>
 										<td><c:out

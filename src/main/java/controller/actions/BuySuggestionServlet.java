@@ -27,7 +27,7 @@ public class BuySuggestionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Integer suggestionId = Integer.parseInt(req.getParameter("id"));
 		Boolean isPromotion = Boolean.parseBoolean(req.getParameter("prom"));
-		User user = (User) req.getSession().getAttribute("user");	
+		User user = (User) req.getSession().getAttribute("user");
 		
 		if (buyService.buy(user.getName(), suggestionId, isPromotion)) {
 			User userAct = UserDAO.findByUsername(user.getName());

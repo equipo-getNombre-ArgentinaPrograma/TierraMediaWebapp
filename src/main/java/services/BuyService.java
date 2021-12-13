@@ -16,7 +16,7 @@ public class BuyService {
 		} else
 			suggestion = AttractionDAO.findById(suggestionId);
 
-		System.out.println(user.getName() + " intenta comprar " + suggestion.getName());
+		System.out.println(user.getName() + " intenta comprar " + suggestion.getPrintName());
 		
 		return user.acquire(suggestion);
 

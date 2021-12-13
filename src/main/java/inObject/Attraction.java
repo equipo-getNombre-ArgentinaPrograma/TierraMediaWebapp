@@ -1,8 +1,5 @@
 package inObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import dao.AttractionDAO;
 
 public class Attraction implements Acquirable {
@@ -14,13 +11,11 @@ public class Attraction implements Acquirable {
 	private String AttractionType;
 	private String description;
 
-	private Map<String, String> errors;
-
-	public Attraction(Integer id, String name, Double price, Double time, Integer quota, String type, String description) {
+	public Attraction(Integer id, String name, Double price, Double duration, Integer quota, String type, String description) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
-		this.completionTime = time;
+		this.completionTime = duration;
 		this.quotaByDay = quota;
 		this.AttractionType = type;
 		this.description = description;
@@ -32,6 +27,10 @@ public class Attraction implements Acquirable {
 	}
 
 	public String getName() {
+		return name;
+	}
+	
+	public String getPrintName() {
 		return "Atraccion " + name;
 	}
 
@@ -116,24 +115,5 @@ public class Attraction implements Acquirable {
 	public void printToScreen() {
 		System.out.println("Atraccion " + getAttractionType() + ".\nNombre: " + getName() + ".\nDuracion: "
 				+ getCompletionTime() + " hora/s.\nPrecio: " + getPrice() + " moneda/s.");
-	}
-
-	public boolean isValid() {
-		validate();
-		return errors.isEmpty();
-	}
-
-	public void validate() {
-		errors = new HashMap<String, String>();
-
-		if (getPrice() <= 0) {
-			errors.put("cost", "Debe ser positivo");
-		}
-		if (getCompletionTime() <= 0) {
-			errors.put("duration", "Debe ser positivo");
-		}
-		if (getQuotaByDay() <= 0) {
-			errors.put("capacity", "Debe ser positivo");
-		}
 	}
 }

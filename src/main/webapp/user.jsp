@@ -66,7 +66,7 @@
 								var="suggestion">
 								<tr>
 									<td><strong><c:out
-												value="${suggestion.getName()}"></c:out>: </strong> <span><c:out
+												value="${suggestion.getPrintName()}"></c:out>: </strong> <span><c:out
 												value="${suggestion.getDescription()}"></c:out></span></td>
 									<td><c:out value="${suggestion.getPrice()}"></c:out></td>
 									<td><c:out value="${suggestion.getCompletionTime()}"></c:out></td>

@@ -8,6 +8,7 @@ import inObject.NullUser;
 import inObject.User;
 import dao.AttractionDAO;
 import dao.PromotionDAO;
+import dao.UserDAO;
 import generator.SuggestionGenerator;
 
 public class AcquirableService {
@@ -25,6 +26,7 @@ public class AcquirableService {
 			users.add(newUser);
 			generator.to(newUser);
 		} else {
+			updateUserList();
 			userIndex = isNewUser(newUser);
 			if (userIndex == -1) {
 				users.add(newUser);
@@ -53,14 +55,12 @@ public class AcquirableService {
 		return generator.getSuggestionList();
 	}
 
-	public Attraction createAttraction(String name, Double price, Double time, Integer quota, String type,
+	public boolean createAttraction(String name, Double price, Double time, Integer quota, String type,
 			String description) {
-		int newId = AttractionDAO.size() + 1;
+		int lastId = AttractionDAO.getAll().get(AttractionDAO.getAll().size() - 1).getId();
+		int newId = lastId + 1;
 		Attraction attraction = new Attraction(newId, name, price, time, quota, type, description);
-		if (attraction.isValid()) {
-			AttractionDAO.newAttraction(attraction);
-		}
-		return attraction;
+		return AttractionDAO.newAttraction(attraction) == 1;
 	}
 
 	public Attraction find(Integer id) {
@@ -72,12 +72,29 @@ public class AcquirableService {
 		AttractionDAO.update(id, name, cost, duration, capacity, description);
 		return null;
 	}
-	
+
 	public boolean delete(Integer suggestionId, boolean isPromotion) {
-		if(!isPromotion)
+		if (!isPromotion)
 			return AttractionDAO.delete(suggestionId);
 		else
 			return PromotionDAO.delete(suggestionId);
-				
+
+	}
+
+	public void updateUserList() {
+		User updatedUser = new NullUser();
+		for (User user : this.users) {
+			updatedUser = UserDAO.findById(user.getId());
+			user.setName(updatedUser.getName());
+			user.setAvailableTime(updatedUser.getAvailableTime());
+			user.setAvailableCoins(updatedUser.getAvailableCoins());
+			user.setPreferredType(updatedUser.getPreferredType());
+		}
+	}
+
+	public boolean editAttraction(Integer attractionId, Double price, Double duration, Integer quota,
+			String description) {
+		Attraction attraction = new Attraction(0, "", price, duration, quota, "", description);
+		return AttractionDAO.editAttraction(attractionId, attraction) != 0;
 	}
 }

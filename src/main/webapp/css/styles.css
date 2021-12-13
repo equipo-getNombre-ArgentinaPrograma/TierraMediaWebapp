@@ -1,106 +1,109 @@
 body {
 	background-color: #d4d4d4;
-    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
 .hamstercito {
 	visibility: hidden;
 }
+
 .hamstercito.active {
 	visibility: visible;
-    position: fixed;
-    top: 0;
-    right: 0;
-    mix-blend-mode: multiply;
+	position: fixed;
+	top: 0;
+	right: 0;
+	mix-blend-mode: multiply;
 }
 
 .hamstercito video {
-    position: relative;
-    top:-100px;
+	position: relative;
+	top: -100px;
 }
 
 .header-container {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 420px; /*con esta propiedad se maneja la altura del .search */
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 420px; /*con esta propiedad se maneja la altura del .search */
 	z-index: -1;
 }
 
 .header {
 	height: 350px;
- 	background-position: 50% 75%;
- 	background-repeat: no-repeat;
-  	background-size: 100%;
-  	box-shadow: 0px 0px 500px rgba(0, 0, 0, 0.3);
+	background-position: 50% 75%;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	box-shadow: 0px 0px 500px rgba(0, 0, 0, 0.3);
 }
 
 .header-buypage {
-	background-image: url("https://cdn.discordapp.com/attachments/667255875538518039/918950506896953364/16120293789_b0518237c2_c_digital_art_x4.jpg");
+	background-image:
+		url("https://cdn.discordapp.com/attachments/667255875538518039/918950506896953364/16120293789_b0518237c2_c_digital_art_x4.jpg");
 	height: 350px;
- 	background-position: 50% 75%;
- 	background-repeat: no-repeat;
-  	background-size: 100%;
-  	box-shadow: 0px 0px 500px rgba(0, 0, 0, 0.3);
+	background-position: 50% 75%;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	box-shadow: 0px 0px 500px rgba(0, 0, 0, 0.3);
 }
 
 .header-admin {
 	background-image: url('/Proyecto-Web/media/header-comprar.jpg');
 	height: 350px;
- 	background-position: 50% 75%;
- 	background-repeat: no-repeat;
-  	background-size: 100%;
-  	box-shadow: 0px 0px 500px rgba(0, 0, 0, 0.3);
+	background-position: 50% 75%;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	box-shadow: 0px 0px 500px rgba(0, 0, 0, 0.3);
 }
 
 .header-user {
 	background: url('/Proyecto-Web/media/middle_earth-map.jpg');
 	height: 350px;
- 	background-position: 50% 75%;
- 	background-repeat: no-repeat;
-  	background-size: 100%;
-  	box-shadow: 0px 0px 500px rgba(0, 0, 0, 0.3);
+	background-position: 50% 75%;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	box-shadow: 0px 0px 500px rgba(0, 0, 0, 0.3);
 }
 
 .header-center {
-    top: 0;
-    margin: 0 auto; left: 0; right: 0; /* posiciona el header en el medio */
-    width: 60%; /*maneja el ancho del header */
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+	top: 0;
+	margin: 0 auto;
+	left: 0;
+	right: 0; /* posiciona el header en el medio */
+	width: 60%; /*maneja el ancho del header */
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .header-title {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .header-title h1 {
-    color: white;
-    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.534);
-    font-size: 2.5rem;
-    margin: .3rem 0;
+	color: white;
+	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.534);
+	font-size: 2.5rem;
+	margin: .3rem 0;
 }
 
 .header-title p {
-    color: white;
-    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.534);
-    font-size: 1.5rem;
-    margin: .3rem 0;
+	color: white;
+	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.534);
+	font-size: 1.5rem;
+	margin: .3rem 0;
 }
 
 .content-container {
-    background-color: #181818;
-    height: 100%;
-    width: 100%;
+	background-color: #181818;
+	height: 100%;
+	width: 100%;
 	opacity: 0.7;
 }
 
-.user-data > p,
-.user-data > span {
+.user-data>p, .user-data>span {
 	text-align: left;
 	display: block;
 }
@@ -117,15 +120,20 @@ body {
 	background-color: #0f0f0f;
 	width: 100%;
 	opacity: 0.7;
-	
 }
 
 .centered-msg {
-	position:absolute; 
-    top:150px; 
-    left:50%; 
-    transform:translate(-50%, -50%);
-    width:25%;
+	position: absolute;
+	top: 150px;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 25%;
 }
 
+.data-input:valid {
+	background-color: rgba(50, 205, 50, 0.1);
+}
 
+.data-input:invalid {
+	background-color: rgba(255, 05, 0, 0.1);
+}

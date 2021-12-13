@@ -95,21 +95,17 @@
 	<div id="log-popup" class="popup">
 		<div class="transparent-label"></div>
 		<div id="log-msg" class="username-popup">
-			<p style="text-align: center">Hola! Gracias por probar estar
-				probando web, para entrar por primera vez podes entrar con un
+			<p style="text-align: center">Hola! Gracias por estar
+				probando la web, para entrar por primera vez podes entrar con un
 				admin/admin y asi crearte tu usuario.</p>
-			<p>Para conectar la base de datos hay que editar el archivo /src/main/resources</p>
+			<p>Para conectar la base de datos hay que editar el archivo
+				/src/main/resources</p>
 			<p>Dejo una lista con algunos bugs que note o cosas que
 				directamente faltan:</p>
 			<ul>
-				<li>No se loguea si fuiste redireccionado desde otro lado que
-					no sea logout.</li>
-				<li>No se implementan contrasenias.</li>
-				<li>Si se eliminan atracciones tira error por todos ya que no
-					se borran de los itinerarios o las promociones.</li>
-				<li>No se crean atracciones.</li>
-				<li>No se verifican los datos al agregar/editar usuarios o
-					atracciones.</li>
+				<li>No se implementan contrasenias seguras.</li>
+				<li>No se verifican los datos al agregar/editar usuarios,
+					atracciones o promociones desde el servidor.</li>
 				<li>No se pueden crear ni editar promociones.</li>
 			</ul>
 			<p>Esta ultima semana fue un poco a las corridas, sepan
