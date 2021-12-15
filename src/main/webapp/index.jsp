@@ -107,6 +107,9 @@
 				<li>No se verifican los datos al agregar/editar usuarios,
 					atracciones o promociones desde el servidor.</li>
 				<li>No se pueden crear ni editar promociones.</li>
+				<li>No hay tests de junit para esta ultima parte.</li>
+				<li>La web es responsive hasta los 750px de ancho aproximadamente.</li>
+				<li>La pestania destinos no esta disponible.</li>
 			</ul>
 			<p>Esta ultima semana fue un poco a las corridas, sepan
 				disculpar.</p>

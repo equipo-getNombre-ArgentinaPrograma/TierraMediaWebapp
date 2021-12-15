@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script src="/Proyecto-Web/js/weather.js" defer></script>
 <div id="overrides-bootstrap">
 	<nav id="overrides-bootstrap" class="navbar">
 		<a href="/Proyecto-Web/index.jsp" class="logo"> ttm </a>
@@ -7,7 +8,12 @@
 				<li><a href="/Proyecto-Web/suggestions/index.do">Comprar</a></li>
 				<li><a href="#">Destinos</a></li>
 			</ul>
+
 			<ul class="items-r">
+				<li>
+					<div id="weather-div">
+					<img src=""><a><span></span></a></div>
+				</li>
 				<c:if test="${user.isAdmin()}">
 					<li><a href="/Proyecto-Web/user/admin.do">Panel de
 							Administrador</a></li>

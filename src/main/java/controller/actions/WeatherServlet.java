@@ -1,47 +1,49 @@
-package controller.session;
+package controller.actions;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import api.Weather;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import inObject.User;
-import services.LoginService;
+import services.WeatherService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private LoginService loginService;
+@WebServlet("/weather.do")
+public class WeatherServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 345572104606278592L;
+	private WeatherService wService;
 
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		loginService = new LoginService();
-
+		this.wService = new WeatherService();
+		System.out.println("weatherServlet");
 	}
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PrintWriter response = resp.getWriter();
-
+		
 		JSONArray jsonArray = new JSONArray();
 		JSONObject jsonObj = new JSONObject();
-
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
+		
+		System.out.println("Buscando datos del tiempo actual...");
+		Weather weather = wService.getWeather();
+		
 		String exitStatus = null;
-
-		User user = loginService.login(username, password);
-
-		if (!user.isNull()) {
-			req.getSession().setAttribute("user", user);
+		
+		if (weather != null) {
 			exitStatus = "1";
+			jsonObj.put("status", exitStatus);
+			jsonObj.put("temperature", weather.getTemperature());
+			jsonObj.put("description", weather.getWeatherDescriptions());
+			jsonObj.put("icon", weather.getWeatherIcons());
 		} else {
 			exitStatus = "2";
 		}
